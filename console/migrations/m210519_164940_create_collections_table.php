@@ -19,6 +19,7 @@ class m210519_164940_create_collections_table extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(255)->notNull(),
             'created_by' => $this->integer(11),
+            'status' => $this->smallInteger()->notNull()->defaultValue(1),
         ]);
 
         // creates index for column `created_by`
