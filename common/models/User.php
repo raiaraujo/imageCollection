@@ -209,4 +209,17 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function beforeSave($insert) {
+        if ($insert) {
+            $this->setPassword($this->password_hash);
+        } else {
+            if (!empty($this->password_hash)) {
+                $this->setPassword($this->password_hash);
+            } else {
+                $this->password_hash = (string) $this->getOldAttribute('password_hash');
+            }
+        }
+        return parent::beforeSave($insert);
+    }
 }
