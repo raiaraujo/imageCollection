@@ -42,6 +42,10 @@ return [
             'rules' => [
             ],
         ],
+        'unsplash' => [
+            'class' => 'yii\httpclient\Client',
+            'baseUrl' => 'https://api.unsplash.com',
+        ],
     ],
     'params' => $params,
 ];

@@ -14,6 +14,10 @@ return [
             // uncomment if you want to cache RBAC items hierarchy
             // 'cache' => 'cache',
         ],
+        'unsplash' => [
+            'class' => 'yii\httpclient\Client',
+            'baseUrl' => 'https://api.unsplash.com',
+        ],
     ],
 
 ];

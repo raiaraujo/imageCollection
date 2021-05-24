@@ -33,14 +33,17 @@ AppAsset::register($this);
         'brandUrl' => Yii::$app->homeUrl
     ]);
     $menuItems = [
-        ['label' => 'Collections', 'url' => ['/collections/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
+
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        $menuItems = [
+            ['label' => 'Collections', 'url' => ['/collection/index']],
+            ['label' => 'Images', 'url' => ['/image/search']],
+        ];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
