@@ -6,7 +6,7 @@
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
-use yii\widgets\Breadcrumbs;
+use yii\bootstrap4\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
@@ -22,6 +22,7 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -33,7 +34,6 @@ AppAsset::register($this);
         'brandUrl' => Yii::$app->homeUrl
     ]);
     $menuItems = [
-
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
@@ -42,7 +42,7 @@ AppAsset::register($this);
     } else {
         $menuItems = [
             ['label' => 'Collections', 'url' => ['/collection/index']],
-            ['label' => 'Images', 'url' => ['/image/search']],
+            ['label' => 'Images', 'url' => ['/image/']],
         ];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

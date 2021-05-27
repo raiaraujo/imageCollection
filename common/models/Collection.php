@@ -39,7 +39,7 @@ class Collection extends ActiveRecord
                 'class'=> BlameableBehavior::class,
                 'updatedByAttribute' => true
             ]
-            ];
+        ];
     }
 
     /**
@@ -90,7 +90,7 @@ class Collection extends ActiveRecord
      */
     public function getImages()
     {
-        return $this->hasMany(Images::className(), ['collection' => 'id']);
+        return $this->hasMany(Image::className(), ['collection' => 'id']);
     }
 
     /**

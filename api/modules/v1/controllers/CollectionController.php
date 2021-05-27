@@ -8,4 +8,10 @@ class CollectionController extends ActiveController
 {
     public $modelClass = 'common\models\Collection';
 
+    public function actionUserCollection(){
+        //TODO: IMPLEMENT
+    }
+
+
+
 }

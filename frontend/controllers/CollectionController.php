@@ -119,6 +119,13 @@ class CollectionController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionSlideshow($id){
+        $model = $this->findModel($id);
+        return $this->render('slideshow', [
+            'images' => $model->images,
+        ]);
+    }
+
     /**
      * Finds the Collection model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
