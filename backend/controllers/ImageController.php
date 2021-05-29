@@ -2,9 +2,14 @@
 
 namespace backend\controllers;
 
+use common\models\Collection;
+use common\models\User;
 use Yii;
 use common\models\Image;
 use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -69,9 +74,23 @@ class ImageController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+        $image = Json::decode(Yii::$app->unsplash->get(
+            '/photos/'.Yii::$app->request->get('image'),
+            [
+                'client_id'=> 'rqJI_ddhGxQSsrCYc9ex6wB7oKg3Smccfm5zgMTPMF4',
+            ]
+        )->send()->content);
 
-        return $this->render('create', [
-            'model' => $model,
+        $collections = ArrayHelper::map(
+            Collection::find()->where('created_by='.Yii::$app->request->get('id'))->all(),
+            'id',
+            'name');
+
+
+        return $this->render('add', [
+            'image' => $image,
+            'collections'=> $collections,
+            'model' => $model
         ]);
     }
 
@@ -107,6 +126,35 @@ class ImageController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionSearch($keyword,$page = 1){
+        $images = Json::decode(Yii::$app->unsplash->get(
+            'search/photos',
+            [
+                'client_id'=> 'rqJI_ddhGxQSsrCYc9ex6wB7oKg3Smccfm5zgMTPMF4',
+                'query' => $keyword,
+                'page' => $page,
+                'per_page' => 20
+            ]
+        )->send()->content);
+
+        $pages = new Pagination([
+            'totalCount' => $images['total']
+        ]);
+
+        return $this->render('search', [
+            'images' => $images['results'],
+            'totalPages'=> $pages
+        ]);
+    }
+
+    public function actionSetUser($id){
+        $model = User::find()->asArray()->all();
+        return $this->render('setuser', [
+            'model' => $model,
+            'image' => $id
+        ]);
     }
 
     /**

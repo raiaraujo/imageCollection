@@ -11,9 +11,7 @@ class CollectionController extends Controller
 
     public function actionSearch()
     {
-
-
-        echo Json::encode(Collection::find()->where('created_by='.$this->user)->all())."\n";
+        echo Json::encode(Collection::find()->with('images')->where('created_by='.$this->user)->asArray()->all())."\n";
     }
 
     public function optionAliases()
